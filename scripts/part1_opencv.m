@@ -40,6 +40,8 @@ matchedPoints2 = correspondences(:,3:4);
 figure; 
 showMatchedFeatures(images(:,:,1), images(:,:,2), matchedPoints1(inliersIndex,:), matchedPoints2(inliersIndex,:),'montage','PlotOptions',{'ro','go','y--'});
 
+[disparityMap] = getDisparity(images(:,:,1), images(:,:,2), F);
+
 j1 = images(:,:,1);
 j2 = images(:,:,2);
 disparityMap = disparitySGM(j1,j2);
