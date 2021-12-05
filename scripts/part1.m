@@ -35,29 +35,39 @@ correspondences = [im1corners(:,2), im1corners(:,1), im2corners(:,2), im2corners
 ransac_iterations = 1000;
 ransac_distance = 5.0;
 
-[ransac_H, ransac_inliers] = my_ransac(correspondences, ransac_iterations, ransac_distance);
+[F,inliersIndex] = estimateFundamentalMatrix(correspondences(:,1:2), correspondences(:,3:4), 'Method', 'RANSAC', 'NumTrials', ransac_iterations, 'DistanceThreshold', 1e-4);
 
-disp(max(ransac_inliers));
+matchedPoints1 = correspondences(:,1:2);
+matchedPoints2 = correspondences(:,3:4);
 
-im2 = double(images(:,:,2));
-[xi, yi] = meshgrid(1:512, 1:340);
-h = inv(ransac_H);
-xx = (h(1,1)*xi+h(1,2)*yi+h(1,3))./(h(3,1)*xi+h(3,2)*yi+h(3,3));
-yy = (h(2,1)*xi+h(2,2)*yi+h(2,3))./(h(3,1)*xi+h(3,2)*yi+h(3,3));
-foo = uint8(interp2(im2,xx,yy));
-figure(1); imshow(foo)
+figure; 
+showMatchedFeatures(images(:,:,1), images(:,:,2), matchedPoints1(inliersIndex,:), matchedPoints2(inliersIndex,:),'montage','PlotOptions',{'ro','go','y--'});
 
 
-h = inv(ransac_H);
-im1 = images(:,:,1);
-im = double(images(:,:,2));
-[xi,yi] = meshgrid(1:size(im, 2), 1:size(im, 1));
-xx = (h(1,1) * xi + h(1,2) * yi + h(1,3))./(h(3,1) * xi + h(3,2) * yi + h(3,3));
-yy = (h(2,1) * xi + h(2,2) * yi + h(2,3))./(h(3,1) * xi + h(3,2) * yi + h(3,3));
-foo = uint8(interp2(im, xx, yy));
-figure;
-% montage({im1, foo});
-imshow(foo);
+% 
+% [ransac_H, ransac_inliers] = my_ransac(correspondences, ransac_iterations, ransac_distance);
+% 
+% disp(max(ransac_inliers));
+% 
+% im2 = double(images(:,:,2));
+% [xi, yi] = meshgrid(1:512, 1:340);
+% h = inv(ransac_H);
+% xx = (h(1,1)*xi+h(1,2)*yi+h(1,3))./(h(3,1)*xi+h(3,2)*yi+h(3,3));
+% yy = (h(2,1)*xi+h(2,2)*yi+h(2,3))./(h(3,1)*xi+h(3,2)*yi+h(3,3));
+% foo = uint8(interp2(im2,xx,yy));
+% figure(1); imshow(foo)
+% 
+% 
+% h = inv(ransac_H);
+% im1 = images(:,:,1);
+% im = double(images(:,:,2));
+% [xi,yi] = meshgrid(1:size(im, 2), 1:size(im, 1));
+% xx = (h(1,1) * xi + h(1,2) * yi + h(1,3))./(h(3,1) * xi + h(3,2) * yi + h(3,3));
+% yy = (h(2,1) * xi + h(2,2) * yi + h(2,3))./(h(3,1) * xi + h(3,2) * yi + h(3,3));
+% foo = uint8(interp2(im, xx, yy));
+% figure;
+% % montage({im1, foo});
+% imshow(foo);
 
 
  

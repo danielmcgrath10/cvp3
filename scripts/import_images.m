@@ -4,7 +4,7 @@ function [rgb_images, gray_images] = import_images(x, y, start, stop)
 
 
     directory = uigetdir(pwd, 'Select a Folder');
-    filePattern = fullfile(directory, '*.jpg');
+    filePattern = fullfile(directory, '*.jpeg');
     imageFiles = dir(filePattern);
     numImages = length(imageFiles);
 %     rgb_images = zeros(x, y, 3, numImages);
