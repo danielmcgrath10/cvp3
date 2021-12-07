@@ -1,7 +1,7 @@
 function [disparity] = getDisparity(im1, im2, fundMatrix)
     x_len = size(im1, 1);
     y_len = size(im2, 2);
-    
+    ncc_max = zeros();
     
     for i = 1:x_len
         for j = 1:y_len
@@ -13,7 +13,7 @@ function [disparity] = getDisparity(im1, im2, fundMatrix)
             row = xr_e(3);
             points = [1:x_len; ones(1,x_len) * row];
             
-            ncc_max = ncc_correspondences(im1, im2, xl, points, 2, 1);
+            ncc_max = ncc(im1, im2, xl, points, 2, 0.1 );
 
 %             if xr_e(1) < x_len && xr_e(2) < y_len
 %                 correspondences(end + 1) = xr_e;

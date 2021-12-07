@@ -42,9 +42,6 @@ showMatchedFeatures(images(:,:,1), images(:,:,2), matchedPoints1(inliersIndex,:)
 
 [disparityMap] = getDisparity(images(:,:,1), images(:,:,2), F);
 
-j1 = images(:,:,1);
-j2 = images(:,:,2);
-disparityMap = disparitySGM(j1,j2);
 figure;
 imshow(disparityMap);
 
