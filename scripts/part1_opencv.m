@@ -57,6 +57,8 @@ end
 % imshow(disparityMap);
 
 
+figure;
+imshow(disparityMap);
 
 % ransac_iterations = 1000;
 % ransac_distance = 5.0;
