@@ -43,11 +43,6 @@ showMatchedFeatures(images(:,:,1), images(:,:,2), matchedPoints1(inliersIndex,:)
 epilines = epipolarLine(F,matchedPoints2(inliersIndex,:));
 borderPoints = lineToBorderPoints(epilines, size(images(:,:,1)));
 
-
-for i = 1:length(epilines)
-    
-end
-
 % [disparityMap] = getDisparity(images(:,:,1), images(:,:,2), F);
 % 
 % j1 = images(:,:,1);

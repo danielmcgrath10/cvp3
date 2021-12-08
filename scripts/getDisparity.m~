@@ -6,16 +6,16 @@ function [disparity_x, disparity_y] = getDisparity(im1, im2, fundMatrix)
     dy = zeros();
     for i = 1:x_len
         for j = 1:y_len
-            xl = [i j];
-            xr_e = epipolarLine(fundMatrix, xl);
+            xl = [i j 1];
+            xr_e = xl * fundMatrix;
             % Making quick assumption that line is horizontal since that is
             % true for both examples. Will try to expand to apply to sloped
             % lines if time allows
-            row = round(xr_e(3));
-            if(row > 2 && row < size(im2,1)-1)
-                points = im2(row,:);
-                ncc_max = ncc(im1, im2, xl, points, 2, 0.1, row);
-                dx(i,j) = i - ncc_max;
+            row = xr_e(3);
+            if(row > 1 && row < size(im2,1))
+                points = [1:x_len; ones(1,x_len) * row];
+                ncc_max = ncc(im1, im2, xl, points, 2, 0.1, row );
+                dx(i,j) = i - ncc_max);
                 dy(i,j) = j - row;
             else
                 dx(i,j) = 0;
