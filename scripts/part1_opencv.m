@@ -43,10 +43,10 @@ showMatchedFeatures(images(:,:,1), images(:,:,2), matchedPoints1(inliersIndex,:)
 epilines = epipolarLine(F,matchedPoints2(inliersIndex,:));
 borderPoints = lineToBorderPoints(epilines, size(images(:,:,1)));
 
-[disparity_x, disparity_y] = getDisparity(image_1,image_2,F);
-
-figure;
-imshow(disparity_x);
+% [disparity_x, disparity_y] = getDisparity(image_1,image_2,F);
+% 
+% figure;
+% imshow(disparity_x);
 % 
 % figure;
 % imshow(disparity_y);
