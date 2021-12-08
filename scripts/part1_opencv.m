@@ -43,13 +43,29 @@ showMatchedFeatures(images(:,:,1), images(:,:,2), matchedPoints1(inliersIndex,:)
 epilines = epipolarLine(F,matchedPoints2(inliersIndex,:));
 borderPoints = lineToBorderPoints(epilines, size(images(:,:,1)));
 
-% [disparityMap] = getDisparity(images(:,:,1), images(:,:,2), F);
+[disparity_x, disparity_y] = getDisparity(image_1,image_2,F);
 
-% j1 = images(:,:,1);
-% j2 = images(:,:,2);
-% disparityRange = [0 48];
-% disparityMap = disparitySGM(j1,j2,'DisparityRange',disparityRange,'UniquenessThreshold',60);
-% figure
-% imshow(disparityMap)
-% colormap jet
-% colorbar;
+figure;
+imshow(disparity_x);
+% 
+% figure;
+% imshow(disparity_y);
+
+im1 = images(:,:,1);
+im2 = images(:,:,2);
+
+
+[t1,t2] = estimateUncalibratedRectification(F,matchedPoints1, matchedPoints2,size(im2));
+
+[I1,I2] = rectifyStereoImages(im1,im2,t1,t2);
+
+A = stereoAnaglyph(I1,I2);
+figure
+imshow(A)
+title('Red-Cyan composite view of the rectified stereo pair image');
+
+disparityMap = disparitySGM(I1,I2, 'DisparityRange', [0 32]);
+figure
+imshow(disparityMap)
+colormap jet
+colorbar;

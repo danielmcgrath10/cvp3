@@ -1,6 +1,6 @@
 function [ncc_max] = ncc(image1, image2, point, search_space, ncc_mesh, ncc_thresh, row)
 ncc = [0,0];
-for j = 1:5:length(search_space)
+for j = 1:20:length(search_space)
     xl1 = round(point(2) - ncc_mesh);
     xh1 = round(point(2) + ncc_mesh);
     yl1 = round(point(1) - ncc_mesh);
